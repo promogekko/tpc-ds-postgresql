@@ -17,6 +17,9 @@ for f in files:
   data_file=m.group(2)
   #print data_file
 
+  cmd="sed 's/.$//' {} | tee /tmp/newvalue.dat && mv /tmp/newvalue.dat {} ".format(f,f)
+  os.system(cmd)
+
   print("TRUNCATE table...",table)
   cmd= "psql test-tpc -q -c 'TRUNCATE {}'".format(table)
   os.system(cmd )
