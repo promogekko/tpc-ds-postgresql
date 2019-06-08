@@ -17,6 +17,7 @@ for f in files:
   data_file=m.group(2)
   #print data_file
 
+  print " Removing last pipe character"
   cmd="sed 's/.$//' {} | tee /tmp/newvalue.dat && mv /tmp/newvalue.dat {} ".format(f,f)
   os.system(cmd)
 
