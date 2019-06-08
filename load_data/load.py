@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import glob
+import os
 import re
 
 path='/tmp'
@@ -10,18 +11,18 @@ files= [f for f in glob.glob(path+"**/*.dat")]
 for f in files:
   m= re.search('(\/tmp\/)(.*)(....)', f)
   table=m.group(2)
-  print(table)
+  #print table
 
   m = re.search('(\/tmp\/)(.*)', f)
   data_file=m.group(2)
-  print(data_file)
+  #print data_file
 
   print("TRUNCATE table...",table)
-  cmd= "psql test-tpcds -q 'TRUNCATE {}'".format(table)
+  cmd= "psql test-tpc -q -c 'TRUNCATE {}'".format(table)
   os.system(cmd )
 
-  print("Loading  data file...",table)
-  cmd= "psql test-tpcds -c '\\copy {} FROM {} CVS DELIMITER "|"' ".format(table, data_file)
+  print("Loading  data file...",f )
+  cmd= """psql test-tpc -c "copy {} FROM '{}' CSV DELIMITER '|' "  """.format(table, f)
   os.system(cmd )
 
 
